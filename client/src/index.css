@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
 html,
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -64,6 +69,8 @@ a {
 .swiper-image {
   height: 200px;
   background-size: cover;
+  filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.65));
+  border-radius: 12px;
 }
 
 .avatar {
@@ -71,7 +78,7 @@ a {
   background-position: center;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   cursor: pointer;
 }
 
@@ -86,12 +93,21 @@ a {
   transform: translate(-50%, 50%) !important;
 }
 
-.home-heading {
-  font-size: 4rem;
-  font-weight: bold;
+.title {
+  position: relative;
+  right: 2px;
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.sub-text {
+  opacity: 0.65;
 }
 
 /* bootstrap */
+.btn {
+  border-radius: 1.1rem;
+}
 
 .form-control {
   opacity: 0.4;
@@ -109,4 +125,12 @@ a {
 
 .dropdown-toggle::after {
   display: none !important;
+}
+
+/* swiper */
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: white;
+  scale: 0.7;
 }

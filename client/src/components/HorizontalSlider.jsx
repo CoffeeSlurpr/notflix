@@ -17,7 +17,11 @@ function HorizontalSlider({ items }) {
     >
       {items.map((item, index) => {
         return (
-          <SwiperSlide className="d-flex justify-content-center" key={index} style={{ width: '250px' }}>
+          <SwiperSlide
+            className="d-flex justify-content-center"
+            key={index}
+            style={{ width: '250px' }}
+          >
             <img src={item} alt="" className="swiper-image" />
           </SwiperSlide>
         );

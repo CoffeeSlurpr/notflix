@@ -1,0 +1,22 @@
+//custom variables
+$primary: #355b70;
+$secondary: #6f7f8c;
+$success: #3e4d59;
+$info: #5c8f94;
+$warning: #6e9fa5;
+$danger: #cc330d;
+$light: #eceeec;
+$dark: #1e2b37;
+$font-sans-serif: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+  Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+  'Courier New', monospace;
+$gradient: linear-gradient(
+  180deg,
+  rgba(255, 255, 255, 0.15),
+  rgba(255, 255, 255, 0)
+);
+
+//import bootstrap
+@import '../../node_modules/bootstrap/scss/bootstrap';

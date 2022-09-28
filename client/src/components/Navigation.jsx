@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Avatar from './Avatar';
 
 function Navigation() {
@@ -9,7 +9,7 @@ function Navigation() {
   return (
     <nav>
       <div className="w-75 mx-auto d-flex py-4 justify-content-between align-items-center">
-        <div className="d-flex gap-5">
+        <div className="d-flex gap-5 left-nav">
           <NavLink className={'glow'} to={'/'} end>
             For you
           </NavLink>
@@ -25,6 +25,11 @@ function Navigation() {
           </NavLink>
         </div>
         <div>
+          <Link className="logo" to={'/'}>
+            Notflix
+          </Link>
+        </div>
+        <div className="d-flex gap-5 right-nav">
           {isLoggedIn ? (
             <Avatar />
           ) : (

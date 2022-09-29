@@ -2,10 +2,11 @@ import React from 'react';
 import HorizontalSlider from './HorizontalSlider';
 import swiperImages from '../assets/swiperImages';
 import { Button } from 'react-bootstrap';
+import PageTransition from './PageTransition';
 
 function Home() {
   return (
-    <div>
+    <PageTransition>
       <div className="w-75 mx-auto" style={{ height: '500px' }}>
         <div className="title">Game of Thrones</div>
         <div className="sub-text w-50">
@@ -31,7 +32,7 @@ function Home() {
         <div className="m-3 ms-5">Action</div>
         <HorizontalSlider items={swiperImages} />
       </div>
-    </div>
+    </PageTransition>
   );
 }
 

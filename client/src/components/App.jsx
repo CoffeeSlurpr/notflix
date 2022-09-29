@@ -28,33 +28,33 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <>
-      <AnimatePresence>
-        <motion.div
-          key={bgImage}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          exit={{ opacity: 0 }}
-        >
-          <div
-            className="background"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-            }}
-          ></div>
-        </motion.div>
-        <div className={`app ${bgLayer(location.pathname)}`}>
-          <Navigation />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/movies" element={<Home />} />
-            <Route path="/series" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </div>
-      </AnimatePresence>
-    </>
+    <AnimatePresence>
+      <motion.div
+        key={bgImage}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7 }}
+        exit={{ opacity: 1 }}
+      >
+        <div
+          className="background"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+          }}
+        ></div>
+      </motion.div>
+
+      <div className={`app ${bgLayer(location.pathname)}`}>
+        <Navigation />
+
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Home />} />
+          <Route path="/series" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </AnimatePresence>
   );
 }
 

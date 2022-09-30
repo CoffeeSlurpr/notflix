@@ -1,0 +1,39 @@
+//custom variables
+$primary: #355b70;
+$secondary: #6f7f8c;
+$success: #3e4d59;
+$info: #5c8f94;
+$warning: #6e9fa5;
+$danger: #cc330d;
+$light: #eceeec;
+$dark: #1e2b37;
+$gradient: linear-gradient(
+  180deg,
+  rgba(255, 255, 255, 0.15),
+  rgba(255, 255, 255, 0)
+);
+
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+
+.btn {
+  border-radius: 1.1rem;
+}
+
+.form-control {
+  opacity: 0.4;
+  border-radius: 1rem;
+
+  &::placeholder {
+    opacity: 0.7;
+    color: $dark;
+  }
+
+  &:focus {
+    opacity: 0.7;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}

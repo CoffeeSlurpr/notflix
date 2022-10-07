@@ -42,11 +42,11 @@ a {
   background-repeat: no-repeat !important;
 }
 
-.transparent {
+.background-transparent {
   background-image: linear-gradient(rgba(7, 7, 16, 0.8), rgba(7, 7, 16, 0.8));
 }
 
-.gradient {
+.background-gradient {
   background-image: linear-gradient(
     rgba(7, 7, 16, 0.65),
     rgba(7, 7, 16, 0.72),

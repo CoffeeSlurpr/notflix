@@ -18,9 +18,9 @@ function App() {
   };
 
   const bgLayer = (path) => {
-    if (path === '/login') return 'transparent';
-    if (path === '/register') return 'transparent';
-    return 'gradient';
+    if (path === '/login') return 'background-transparent';
+    if (path === '/register') return 'background-transparent';
+    return 'background-gradient';
   };
 
   useEffect(() => {

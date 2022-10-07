@@ -15,8 +15,8 @@ function Login() {
           <Form.Group className="mb-3">
             <Form.Control type="password" placeholder="Your password..." />
           </Form.Group>
-          <Button className="w-100 mt-2" type="submit">
-            Submit
+          <Button className="w-100 mt-2 gradient-primary" variant="primary">
+            Login
           </Button>
         </Form>
       </PageTransition>

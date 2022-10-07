@@ -1,23 +1,77 @@
 //custom variables
 $primary: #355b70;
-$secondary: #6f7f8c;
-$success: #3e4d59;
-$info: #5c8f94;
-$warning: #6e9fa5;
+$secondary: #1e3244;
+$success: #447755;
+$info: #dedede66;
+$warning: #dfb371;
 $danger: #cc330d;
 $light: #eceeec;
 $dark: #1e2b37;
-$gradient: linear-gradient(
-  180deg,
-  rgba(255, 255, 255, 0.15),
-  rgba(255, 255, 255, 0)
-);
 
+//core imports
 @import '../../node_modules/bootstrap/scss/functions';
 @import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+//modules
+@import '../../node_modules/bootstrap/scss/buttons';
+@import '../../node_modules/bootstrap/scss/forms';
 
 .btn {
+  position: relative;
+  color: white;
+  border: none;
   border-radius: 1.1rem;
+  z-index: 1;
+}
+
+.gradient-primary {
+  background: linear-gradient(90deg, $primary, $secondary);
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    color: white;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+
+  &:hover::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 1s;
+    filter: blur(10px);
+    opacity: var(0.7);
+    border-radius: inherit;
+    background: linear-gradient(90deg, $primary, $secondary);
+  }
+}
+
+.info-glow {
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+
+  &:hover::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 1s;
+    filter: blur(10px);
+    opacity: var(0.7);
+    border-radius: inherit;
+    background: $info;
+  }
 }
 
 .form-control {

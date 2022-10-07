@@ -1,4 +1,4 @@
-@import 'app.scss';
+@use 'app.scss' as *;
 
 .swiper-image {
   height: 200px;

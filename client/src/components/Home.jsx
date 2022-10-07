@@ -16,7 +16,7 @@ function Home() {
           </div>
           <div>Last watched: season 2 - episode 4</div>
         </div>
-        <Button className="mt-4" variant="secondary">
+        <Button className="mt-4 info-glow" variant="info">
           Continue Watching
         </Button>
       </div>

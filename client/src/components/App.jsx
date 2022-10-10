@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import Home from './Home';
 import Login from './Login';
+import Player from './Player';
 import { Route, Routes } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -45,13 +46,14 @@ function App() {
       </motion.div>
 
       <div className={`app ${bgLayer(location.pathname)}`}>
-        <Navigation />
+        {location.pathname !== '/player/' ? <Navigation /> : null}
 
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Home />} />
           <Route path="/series" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/player" element={<Player />} />
         </Routes>
       </div>
     </AnimatePresence>

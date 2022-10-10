@@ -1,0 +1,155 @@
+.player-wrapper {
+  margin: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 16/9;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.player-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  color: #cccccc;
+  box-shadow: inset 0px 50px 35px #0707109a, inset 0px -50px 35px #0707109a;
+}
+
+.controls {
+  height: 30px;
+  font-size: 0.725rem;
+
+  .skip-time {
+    transform: translateY(25%);
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+.player-logo {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.player-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.player-subtext {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.timeline-container {
+  height: 30px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.timeline {
+  position: relative;
+  background-color: rgba(217, 217, 217, 0.3);
+  height: 4px;
+  border-radius: 15px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: calc(100% - var(--load-position, 0.5) * 100%);
+    background-color: rgb(204, 204, 204, 0.5);
+    border-radius: inherit;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: calc(100% - var(--progress-position, 0.25) * 100%);
+    background-color: rgba(204, 204, 204, 1);
+    border-radius: inherit;
+  }
+
+  &.indicator {
+    --scale: 1;
+    position: absolute;
+    height: 200%;
+    top: -50%;
+    border-radius: 50%;
+    transform: translateX(-50%) scale(var(--scale));
+    left: calc(var(--progress-position, 0.25) * 100%);
+    transition: transform 0.15s ease-in-out;
+    aspect-ratio: 1/1;
+    background-color: #cccccc;
+    z-index: 1;
+  }
+}
+
+.settings-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  background-color: rgba(38, 38, 38, 0.7);
+  backdrop-filter: blur(17px);
+}
+
+.options {
+  .header {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .option-menu {
+    width: 215px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(13.5px);
+    border-radius: 8px;
+
+    .category {
+      font-weight: 600;
+      font-size: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(22.5px);
+      border-radius: 8px 8px 0px 0px;
+    }
+
+    .options-list > *:hover {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(47px);
+      cursor: pointer;
+    }
+
+    .switch-on,
+    .switch-off {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12.5px);
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .switch-off {
+      border-radius: 0 0 9px 0;
+    }
+
+    .switch-on {
+      border-radius: 0 0 0 9px;
+    }
+
+    .switch-active {
+      opacity: 1;
+    }
+  }
+}

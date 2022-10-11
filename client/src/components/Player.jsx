@@ -19,7 +19,7 @@ const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
 const languages = ['Magyar', 'English', '日本', '>عر'];
 
 function Player() {
-  const [isHovered, setIsHovered] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const [isInSettings, setIsInSettings] = useState(false);
 
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
@@ -34,12 +34,14 @@ function Player() {
     playing: false,
     controls: false,
     played: 0,
+    playedSeconds: 0,
     loaded: 0,
+    loadedSeconds: 0,
     duration: 0,
   });
 
   const handleHover = () => {
-    //setIsHovered(!isHovered);
+    setIsHovered(!isHovered);
   };
 
   const handleSettingsMenu = () => {
@@ -59,7 +61,9 @@ function Player() {
     setPlayerState({
       ...playerState,
       played: progress.played,
+      playedSeconds: progress.playedSeconds,
       loaded: progress.loaded,
+      loadedSeconds: progress.loadedSeconds,
     });
 
     timelineRef.current.style.setProperty('--progress-position', progress.played);
@@ -81,6 +85,13 @@ function Player() {
     playerRef.current.seekTo(timelinePercent, 'fraction');
 
     timelineRef.current.style.setProperty('--progress-position', timelinePercent);
+  };
+
+  const handleForwardRewind = (seconds) => {
+    if (Math.sign(seconds) === 1)
+      playerRef.current.seekTo(playerState.playedSeconds + 10, 'seconds');
+    if (Math.sign(seconds) === -1)
+      playerRef.current.seekTo(playerState.playedSeconds - 10, 'seconds');
   };
 
   const renderOverlay = () => {
@@ -127,7 +138,10 @@ function Player() {
             </div>
 
             <div className="d-flex justify-content-center align-items-center gap-2 w-100">
-              <div className="d-flex justify-content-center align-items-center controls-element">
+              <div
+                onClick={() => handleForwardRewind(-10)}
+                className="d-flex justify-content-center align-items-center controls-element"
+              >
                 <div className="skip-time">10</div>
                 <FontAwesomeIcon icon={faRotateLeft} />
               </div>
@@ -140,7 +154,10 @@ function Player() {
                 {playerState.playing && <FontAwesomeIcon icon={faPause} />}
               </div>
 
-              <div className="d-flex justify-content-center align-items-center controls-element">
+              <div
+                onClick={() => handleForwardRewind(10)}
+                className="d-flex justify-content-center align-items-center controls-element"
+              >
                 <FontAwesomeIcon icon={faRotateRight} />
                 <div className="skip-time">10</div>
               </div>

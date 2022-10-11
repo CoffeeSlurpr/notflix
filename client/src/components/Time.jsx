@@ -13,8 +13,6 @@ function Time({ className, seconds }) {
       ss = '0' + ss;
     }
 
-    console.log(hh, mm, ss);
-
     return hh === 0 ? `${mm}:${ss}` : `${hh}:${mm}:${ss}`;
   };
 

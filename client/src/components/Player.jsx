@@ -11,6 +11,7 @@ import {
   faRotateRight,
   faVolumeHigh,
   faExpand,
+  faPause,
 } from '@fortawesome/free-solid-svg-icons';
 
 const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
@@ -23,12 +24,23 @@ function Player() {
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
+  const [playerState, setPlayerState] = useState({
+    url: url,
+    playing: false,
+    controls: false,
+    played: 0,
+  });
+
   const handleHover = () => {
     //setIsHovered(!isHovered);
   };
 
   const handleSettingsMenu = () => {
     setIsInSettings(!isInSettings);
+  };
+
+  const handlePlayPause = () => {
+    setPlayerState({ ...playerState, playing: !playerState.playing });
   };
 
   const renderOverlay = () => {
@@ -79,14 +91,20 @@ function Player() {
             </div>
 
             <div className="d-flex justify-content-center align-items-center gap-2 w-100">
-              <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex justify-content-center align-items-center controls-element">
                 <div className="skip-time">10</div>
                 <FontAwesomeIcon icon={faRotateLeft} />
               </div>
 
-              <FontAwesomeIcon icon={faPlay} />
+              <div
+                className="controls-element d-flex justify-content-center"
+                onClick={handlePlayPause}
+              >
+                {!playerState.playing && <FontAwesomeIcon icon={faPlay} />}
+                {playerState.playing && <FontAwesomeIcon icon={faPause} />}
+              </div>
 
-              <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex justify-content-center align-items-center controls-element">
                 <FontAwesomeIcon icon={faRotateRight} />
                 <div className="skip-time">10</div>
               </div>
@@ -207,7 +225,13 @@ function Player() {
 
       {isInSettings && renderSettings()}
 
-      <ReactPlayer className="player" width="100%" height="100%" url="" />
+      <ReactPlayer
+        className="player"
+        width="100%"
+        height="100%"
+        url={playerState.url}
+        playing={playerState.playing}
+      />
     </div>
   );
 }

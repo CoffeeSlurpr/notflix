@@ -9,26 +9,22 @@ import {
   faRotateLeft,
   faPlay,
   faRotateRight,
+  faVolumeHigh,
+  faExpand,
 } from '@fortawesome/free-solid-svg-icons';
 
 const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
 const languages = ['Magyar', 'English', '日本', '>عر'];
 
 function Player() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(true);
   const [isInSettings, setIsInSettings] = useState(false);
 
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
-  const handleIsSwitchActive = (boolean) => {
-    if (boolean) return 'switch-active';
-    if (!boolean) return '';
-  };
-
   const handleHover = () => {
-    setIsHovered(!isHovered);
-    console.log('hovered');
+    //setIsHovered(!isHovered);
   };
 
   const handleSettingsMenu = () => {
@@ -74,27 +70,42 @@ function Player() {
 
         <div className="h-100 d-flex flex-column justify-content-end">
           {/* controls */}
-          <div className="controls d-flex justify-content-center align-items-center gap-2">
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="skip-time">10</div>
-              <FontAwesomeIcon icon={faRotateLeft} />
+          <div className="controls d-flex justify-content-center align-items-center px-3">
+            <div className="col-1 d-flex justify-content-start align-items-center gap-2">
+              <FontAwesomeIcon icon={faVolumeHigh} />
+              <div className="volume-bar">
+                <div className="indicator"></div>
+              </div>
             </div>
-            <FontAwesomeIcon icon={faPlay} />
-            <div className="d-flex justify-content-center align-items-center">
-              <FontAwesomeIcon icon={faRotateRight} />
-              <div className="skip-time">10</div>
+
+            <div className="d-flex justify-content-center align-items-center gap-2 w-100">
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="skip-time">10</div>
+                <FontAwesomeIcon icon={faRotateLeft} />
+              </div>
+
+              <FontAwesomeIcon icon={faPlay} />
+
+              <div className="d-flex justify-content-center align-items-center">
+                <FontAwesomeIcon icon={faRotateRight} />
+                <div className="skip-time">10</div>
+              </div>
+            </div>
+
+            <div className="col-1 d-flex justify-content-end">
+              <FontAwesomeIcon icon={faExpand} style={{ fontSize: '16px' }} />
             </div>
           </div>
 
           {/* timeline */}
           <div className="w-100 timeline-container d-flex justify-content-between align-items-center">
-            <div className="text-center col-1">0:00</div>
+            <div className="text-center px-3">00:00:00</div>
             <div className="w-100 d-flex justify-content-center">
               <div className="timeline w-100">
                 <div className="indicator"></div>
               </div>
             </div>
-            <div className="text-center col-1">-0:00</div>
+            <div className="text-center px-3">-00:00:00</div>
           </div>
         </div>
       </div>
@@ -122,8 +133,12 @@ function Player() {
             <div className="option-menu">
               <div className="category p-2">Subtitle</div>
               <div className="options-list my-2">
-                {languages.map((lang) => {
-                  return <div className="p-1">{lang}</div>;
+                {languages.map((lang, index) => {
+                  return (
+                    <div key={index} className="p-1">
+                      {lang}
+                    </div>
+                  );
                 })}
               </div>
               <div className="d-flex justify-content-center">
@@ -149,8 +164,12 @@ function Player() {
             <div className="option-menu">
               <div className="category p-2">Language</div>
               <div className="options-list my-2">
-                {languages.map((lang) => {
-                  return <div className="p-1">{lang}</div>;
+                {languages.map((lang, index) => {
+                  return (
+                    <div key={index} className="p-1">
+                      {lang}
+                    </div>
+                  );
                 })}
               </div>
               <div className="d-flex justify-content-center">

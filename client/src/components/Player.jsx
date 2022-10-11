@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import '../scss/player.scss';
 import ReactPlayer from 'react-player';
+import Time from './Time';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
@@ -24,11 +25,17 @@ function Player() {
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
+  const timelineRef = useRef();
+  const playerRef = useRef();
+
   const [playerState, setPlayerState] = useState({
     url: url,
+    volume: 0.2,
     playing: false,
     controls: false,
     played: 0,
+    loaded: 0,
+    duration: 0,
   });
 
   const handleHover = () => {
@@ -43,13 +50,42 @@ function Player() {
     setPlayerState({ ...playerState, playing: !playerState.playing });
   };
 
+  const handleDuration = (duration) => {
+    console.log('onDuration', duration);
+    setPlayerState({ ...playerState, duration });
+  };
+
+  const handleProgress = (progress) => {
+    setPlayerState({
+      ...playerState,
+      played: progress.played,
+      loaded: progress.loaded,
+    });
+
+    timelineRef.current.style.setProperty('--progress-position', progress.played);
+
+    timelineRef.current.style.setProperty('--load-position', progress.loaded);
+  };
+
+  const handleSeekClick = (e) => {
+    const cursorPosition = timelineRef.current.getBoundingClientRect();
+    const timelinePercent =
+      Math.min(Math.max(0, e.pageX - cursorPosition.x), cursorPosition.width) /
+      cursorPosition.width;
+
+    setPlayerState({
+      ...playerState,
+      played: timelinePercent,
+    });
+
+    playerRef.current.seekTo(timelinePercent, 'fraction');
+
+    timelineRef.current.style.setProperty('--progress-position', timelinePercent);
+  };
+
   const renderOverlay = () => {
     return (
-      <div
-        className={`player-overlay d-flex flex-column pt-2 ${
-          isInSettings && 'invisible'
-        }`}
-      >
+      <div className={`player-overlay d-flex flex-column pt-2 ${isInSettings && 'invisible'}`}>
         {/* header */}
         <div className="d-flex">
           <div className="d-flex align-items-center px-3">
@@ -117,13 +153,16 @@ function Player() {
 
           {/* timeline */}
           <div className="w-100 timeline-container d-flex justify-content-between align-items-center">
-            <div className="text-center px-3">00:00:00</div>
+            <Time
+              className="text-center time"
+              seconds={playerState.duration * playerState.played}
+            ></Time>
             <div className="w-100 d-flex justify-content-center">
-              <div className="timeline w-100">
+              <div ref={timelineRef} onClick={(e) => handleSeekClick(e)} className="timeline w-100">
                 <div className="indicator"></div>
               </div>
             </div>
-            <div className="text-center px-3">-00:00:00</div>
+            <Time className="text-center time" seconds={playerState.duration}></Time>
           </div>
         </div>
       </div>
@@ -162,17 +201,13 @@ function Player() {
               <div className="d-flex justify-content-center">
                 <div
                   onClick={() => setIsSubtitleOn(true)}
-                  className={`w-100 switch-on p-1 ${
-                    isSubtitleOn && 'switch-active'
-                  }`}
+                  className={`w-100 switch-on p-1 ${isSubtitleOn && 'switch-active'}`}
                 >
                   On
                 </div>
                 <div
                   onClick={() => setIsSubtitleOn(false)}
-                  className={`w-100 switch-off p-1 ${
-                    !isSubtitleOn && 'switch-active'
-                  }`}
+                  className={`w-100 switch-off p-1 ${!isSubtitleOn && 'switch-active'}`}
                 >
                   Off
                 </div>
@@ -193,17 +228,13 @@ function Player() {
               <div className="d-flex justify-content-center">
                 <div
                   onClick={() => setIsLanguageOn(true)}
-                  className={`w-100 switch-on p-1 ${
-                    isLanguageOn && 'switch-active'
-                  }`}
+                  className={`w-100 switch-on p-1 ${isLanguageOn && 'switch-active'}`}
                 >
                   On
                 </div>
                 <div
                   onClick={() => setIsLanguageOn(false)}
-                  className={`w-100 switch-off p-1 ${
-                    !isLanguageOn && 'switch-active'
-                  }`}
+                  className={`w-100 switch-off p-1 ${!isLanguageOn && 'switch-active'}`}
                 >
                   Off
                 </div>
@@ -216,21 +247,20 @@ function Player() {
   };
 
   return (
-    <div
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
-      className="player-wrapper h-75"
-    >
+    <div onMouseEnter={handleHover} onMouseLeave={handleHover} className="player-wrapper h-75">
       {isHovered && renderOverlay()}
 
       {isInSettings && renderSettings()}
 
       <ReactPlayer
+        ref={playerRef}
         className="player"
         width="100%"
         height="100%"
         url={playerState.url}
         playing={playerState.playing}
+        onDuration={handleDuration}
+        onProgress={handleProgress}
       />
     </div>
   );

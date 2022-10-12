@@ -20,7 +20,7 @@ const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
 const languages = ['Magyar', 'English', '日本', '>عر'];
 
 function Player() {
-  const [isHovered, setIsHovered] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const [isInSettings, setIsInSettings] = useState(false);
 
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
@@ -47,7 +47,7 @@ function Player() {
   });
 
   const handleHover = () => {
-    //setIsHovered(!isHovered);
+    setIsHovered(!isHovered);
   };
 
   const handleSettingsMenu = () => {
@@ -295,7 +295,7 @@ function Player() {
       ref={playerWrapper}
       className="player-wrapper h-75"
     >
-      {isHovered && renderOverlay()}
+      <div className={!isHovered ? 'd-none' : ''}>{renderOverlay()}</div>
 
       {isInSettings && renderSettings()}
 

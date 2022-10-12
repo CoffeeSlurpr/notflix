@@ -45,7 +45,7 @@
       left: 0;
       top: 0;
       bottom: 0;
-      right: calc(100% - var(--progress-position, 0.5) * 100%);
+      right: calc(100% - var(--volume-position) * 100%);
       background-color: rgba(204, 204, 204, 1);
       border-radius: inherit;
     }
@@ -57,7 +57,7 @@
       top: -50%;
       border-radius: 50%;
       transform: translateX(-50%) scale(var(--scale));
-      left: calc(var(--progress-position, 0.5) * 100%);
+      left: calc(var(--volume-position) * 100%);
       transition: transform 0.15s ease-in-out;
       aspect-ratio: 1/1;
       background-color: #cccccc;

@@ -26,6 +26,7 @@ function Player() {
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
   const timelineRef = useRef();
+  const volumeRef = useRef();
   const playerRef = useRef();
 
   const [playerState, setPlayerState] = useState({
@@ -87,6 +88,17 @@ function Player() {
     timelineRef.current.style.setProperty('--progress-position', timelinePercent);
   };
 
+  const handleVolumeClick = (e) => {
+    const cursorPosition = volumeRef.current.getBoundingClientRect();
+    const volumePercent =
+      Math.min(Math.max(0, e.pageX - cursorPosition.x), cursorPosition.width) /
+      cursorPosition.width;
+
+    setPlayerState({ ...playerState, volume: volumePercent });
+
+    volumeRef.current.style.setProperty('--volume-position', volumePercent);
+  };
+
   const handleForwardRewind = (seconds) => {
     if (Math.sign(seconds) === 1)
       playerRef.current.seekTo(playerState.playedSeconds + 10, 'seconds');
@@ -132,7 +144,7 @@ function Player() {
           <div className="controls d-flex justify-content-center align-items-center px-3">
             <div className="col-1 d-flex justify-content-start align-items-center gap-2">
               <FontAwesomeIcon icon={faVolumeHigh} />
-              <div className="volume-bar">
+              <div ref={volumeRef} onClick={(e) => handleVolumeClick(e)} className="volume-bar">
                 <div className="indicator"></div>
               </div>
             </div>
@@ -276,6 +288,7 @@ function Player() {
         height="100%"
         url={playerState.url}
         playing={playerState.playing}
+        volume={playerState.volume}
         onDuration={handleDuration}
         onProgress={handleProgress}
       />

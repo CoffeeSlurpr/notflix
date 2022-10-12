@@ -46,10 +46,6 @@ function Player() {
     pip: false,
   });
 
-  const handleHover = () => {
-    setIsHovered(!isHovered);
-  };
-
   const handleSettingsMenu = () => {
     setIsInSettings(!isInSettings);
   };
@@ -290,8 +286,8 @@ function Player() {
 
   return (
     <div
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       ref={playerWrapper}
       className="player-wrapper h-75"
     >

@@ -114,7 +114,7 @@ function Player() {
     setIsFullscreen(!isFullscreen);
 
     if (!isFullscreen) playerWrapper.current.requestFullscreen();
-    if (isFullscreen) Document.exitFullscreen();
+    if (isFullscreen) document.exitFullscreen();
   };
 
   const renderOverlay = () => {

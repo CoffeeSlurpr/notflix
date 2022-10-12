@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../scss/player.scss';
 import ReactPlayer from 'react-player';
 import Time from './Time';
@@ -45,6 +45,10 @@ function Player() {
     duration: 0,
     pip: false,
   });
+
+  useEffect(() => {
+    volumeRef.current.style.setProperty('--volume-position', playerState.volume);
+  }, []);
 
   const handleSettingsMenu = () => {
     setIsInSettings(!isInSettings);

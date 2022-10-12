@@ -20,7 +20,7 @@ const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
 const languages = ['Magyar', 'English', '日本', '>عر'];
 
 function Player() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(true);
   const [isInSettings, setIsInSettings] = useState(false);
 
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
@@ -43,10 +43,11 @@ function Player() {
     loaded: 0,
     loadedSeconds: 0,
     duration: 0,
+    pip: false,
   });
 
   const handleHover = () => {
-    setIsHovered(!isHovered);
+    //setIsHovered(!isHovered);
   };
 
   const handleSettingsMenu = () => {
@@ -212,11 +213,11 @@ function Player() {
 
   const renderSettings = () => {
     return (
-      <div className="settings-overlay pt-2">
+      <div className="settings-overlay pt-2 d-flex flex-column pt-2">
         <div
           onClick={handleSettingsMenu}
           className="d-flex align-items-center px-3 position-absolute"
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', height: '52px' }}
         >
           <FontAwesomeIcon icon={faXmark} />
           <div className="ps-1" style={{ fontSize: '12px' }}>
@@ -304,6 +305,7 @@ function Player() {
         width="100%"
         height="100%"
         url={playerState.url}
+        pip={playerState.pip}
         playing={playerState.playing}
         volume={playerState.volume}
         onDuration={handleDuration}

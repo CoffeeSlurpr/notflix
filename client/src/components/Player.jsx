@@ -12,6 +12,7 @@ import {
   faRotateRight,
   faVolumeHigh,
   faExpand,
+  faCompress,
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,9 +26,12 @@ function Player() {
   const [isSubtitleOn, setIsSubtitleOn] = useState(false);
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   const timelineRef = useRef();
   const volumeRef = useRef();
   const playerRef = useRef();
+  const playerWrapper = useRef();
 
   const [playerState, setPlayerState] = useState({
     url: url,
@@ -106,6 +110,13 @@ function Player() {
       playerRef.current.seekTo(playerState.playedSeconds - 10, 'seconds');
   };
 
+  const handleToggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+
+    if (!isFullscreen) playerWrapper.current.requestFullscreen();
+    if (isFullscreen) Document.exitFullscreen();
+  };
+
   const renderOverlay = () => {
     return (
       <div className={`player-overlay d-flex flex-column pt-2 ${isInSettings && 'invisible'}`}>
@@ -175,8 +186,9 @@ function Player() {
               </div>
             </div>
 
-            <div className="col-1 d-flex justify-content-end">
-              <FontAwesomeIcon icon={faExpand} style={{ fontSize: '16px' }} />
+            <div onClick={handleToggleFullscreen} className="col-1 d-flex justify-content-end">
+              {!isFullscreen && <FontAwesomeIcon icon={faExpand} style={{ fontSize: '16px' }} />}
+              {isFullscreen && <FontAwesomeIcon icon={faCompress} style={{ fontSize: '16px' }} />}
             </div>
           </div>
 
@@ -276,7 +288,12 @@ function Player() {
   };
 
   return (
-    <div onMouseEnter={handleHover} onMouseLeave={handleHover} className="player-wrapper h-75">
+    <div
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHover}
+      ref={playerWrapper}
+      className="player-wrapper h-75"
+    >
       {isHovered && renderOverlay()}
 
       {isInSettings && renderSettings()}

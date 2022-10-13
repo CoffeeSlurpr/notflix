@@ -14,6 +14,7 @@ import {
   faExpand,
   faCompress,
   faPause,
+  faVolumeMute,
 } from '@fortawesome/free-solid-svg-icons';
 
 const url = 'https://www.youtube.com/watch?v=pEfrdAtAmqk&ab_channel=Fireship';
@@ -36,6 +37,7 @@ function Player() {
   const [playerState, setPlayerState] = useState({
     url: url,
     volume: 0.2,
+    muted: false,
     playing: false,
     controls: false,
     played: 0,
@@ -160,6 +162,10 @@ function Player() {
     volumeRef.current.style.setProperty('--volume-position', volumePercent);
   };
 
+  const handleToggleMute = () => {
+    setPlayerState({ ...playerState, muted: !playerState.muted });
+  };
+
   const handleForwardRewind = (seconds) => {
     if (Math.sign(seconds) === 1)
       playerRef.current.seekTo(playerState.playedSeconds + 10, 'seconds');
@@ -215,7 +221,10 @@ function Player() {
               onMouseUp={() => handleVolumeMouseUp()}
               className="col-1 d-flex justify-content-start align-items-center gap-2 h-100"
             >
-              <FontAwesomeIcon icon={faVolumeHigh} />
+              <div onClick={handleToggleMute}>
+                {playerState.muted && <FontAwesomeIcon icon={faVolumeMute} />}
+                {!playerState.muted && <FontAwesomeIcon icon={faVolumeHigh} />}
+              </div>
               <div
                 ref={volumeRef}
                 onClick={(e) => handleVolumeClick(e)}
@@ -382,6 +391,7 @@ function Player() {
         pip={playerState.pip}
         playing={playerState.playing}
         volume={playerState.volume}
+        muted={playerState.muted}
         onDuration={handleDuration}
         onProgress={handleProgress}
       />

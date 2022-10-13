@@ -24,7 +24,6 @@ function Player() {
   const [isHovered, setIsHovered] = useState(false);
   const [isInSettings, setIsInSettings] = useState(false);
 
-  const [isSubtitleOn, setIsSubtitleOn] = useState(false);
   const [isLanguageOn, setIsLanguageOn] = useState(false);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -213,16 +212,6 @@ function Player() {
           </div>
         </div>
 
-        <div
-          className={`subtitles d-flex align-items-center justify-content-center text-center p-3 m-auto ${
-            isSubtitleOn ? 'visible' : 'invisible'
-          }`}
-        >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae nemo beatae facere
-          ipsa! Commodi labore, cumque adipisci atque quidem laborum similique dolorum sapiente ea
-          error modi quod, ducimus eos aut.
-        </div>
-
         <div className="h-100 d-flex flex-column justify-content-end">
           {/* controls */}
           <div className="controls d-flex justify-content-center align-items-center px-3">
@@ -322,33 +311,6 @@ function Player() {
           <div className="pb-3 header">Settings</div>
 
           <div className="d-flex justify-content-center gap-5">
-            <div className="option-menu">
-              <div className="category p-2">Subtitle</div>
-              <div className="options-list my-2">
-                {languages.map((lang, index) => {
-                  return (
-                    <div key={index} className="p-1">
-                      {lang}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="d-flex justify-content-center">
-                <div
-                  onClick={() => setIsSubtitleOn(true)}
-                  className={`w-100 switch-on p-1 ${isSubtitleOn && 'switch-active'}`}
-                >
-                  On
-                </div>
-                <div
-                  onClick={() => setIsSubtitleOn(false)}
-                  className={`w-100 switch-off p-1 ${!isSubtitleOn && 'switch-active'}`}
-                >
-                  Off
-                </div>
-              </div>
-            </div>
-
             <div className="option-menu">
               <div className="category p-2">Language</div>
               <div className="options-list my-2">

@@ -228,7 +228,7 @@ function Player() {
                 ref={volumeRef}
                 onClick={(e) => handleVolumeClick(e)}
                 onMouseDown={() => handleVolumeMouseDown()}
-                className="volume-bar"
+                className={`volume-bar ${playerState.muted && 'invisible'}`}
               >
                 <div className="indicator"></div>
               </div>

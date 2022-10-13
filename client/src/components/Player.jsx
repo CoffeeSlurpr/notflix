@@ -218,7 +218,9 @@ function Player() {
             isSubtitleOn ? 'visible' : 'invisible'
           }`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae nemo beatae facere
+          ipsa! Commodi labore, cumque adipisci atque quidem laborum similique dolorum sapiente ea
+          error modi quod, ducimus eos aut.
         </div>
 
         <div className="h-100 d-flex flex-column justify-content-end">

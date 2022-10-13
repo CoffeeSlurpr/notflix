@@ -44,6 +44,8 @@ function Player() {
     loadedSeconds: 0,
     duration: 0,
     pip: false,
+    seeking: false,
+    volumeSeeking: false,
   });
 
   useEffect(() => {
@@ -64,17 +66,50 @@ function Player() {
   };
 
   const handleProgress = (progress) => {
+    if (!playerState.seeking) {
+      setPlayerState({
+        ...playerState,
+        played: progress.played,
+        playedSeconds: progress.playedSeconds,
+        loaded: progress.loaded,
+        loadedSeconds: progress.loadedSeconds,
+      });
+
+      timelineRef.current.style.setProperty('--progress-position', progress.played);
+
+      timelineRef.current.style.setProperty('--load-position', progress.loaded);
+    }
+  };
+
+  const handleSeekMouseDown = () => {
+    setPlayerState({ ...playerState, seeking: true });
+  };
+
+  const handleSeekChange = (e) => {
+    if (playerState.seeking) {
+      const cursorPosition = timelineRef.current.getBoundingClientRect();
+      const timelinePercent =
+        Math.min(Math.max(0, e.pageX - cursorPosition.x), cursorPosition.width) /
+        cursorPosition.width;
+
+      timelineRef.current.style.setProperty('--progress-position', timelinePercent);
+    }
+  };
+
+  const handleSeekMouseUp = (e) => {
+    const cursorPosition = timelineRef.current.getBoundingClientRect();
+    const timelinePercent =
+      Math.min(Math.max(0, e.pageX - cursorPosition.x), cursorPosition.width) /
+      cursorPosition.width;
+
+    playerRef.current.seekTo(timelinePercent, 'fraction');
+
     setPlayerState({
       ...playerState,
-      played: progress.played,
-      playedSeconds: progress.playedSeconds,
-      loaded: progress.loaded,
-      loadedSeconds: progress.loadedSeconds,
+      played: timelinePercent,
     });
 
-    timelineRef.current.style.setProperty('--progress-position', progress.played);
-
-    timelineRef.current.style.setProperty('--load-position', progress.loaded);
+    setPlayerState({ ...playerState, seeking: false });
   };
 
   const handleSeekClick = (e) => {
@@ -91,6 +126,27 @@ function Player() {
     playerRef.current.seekTo(timelinePercent, 'fraction');
 
     timelineRef.current.style.setProperty('--progress-position', timelinePercent);
+  };
+
+  const handleVolumeMouseDown = () => {
+    setPlayerState({ ...playerState, volumeSeeking: true });
+  };
+
+  const handleVolumeChange = (e) => {
+    if (playerState.volumeSeeking) {
+      const cursorPosition = volumeRef.current.getBoundingClientRect();
+      const volumePercent =
+        Math.min(Math.max(0, e.pageX - cursorPosition.x), cursorPosition.width) /
+        cursorPosition.width;
+
+      setPlayerState({ ...playerState, volume: volumePercent });
+
+      volumeRef.current.style.setProperty('--volume-position', volumePercent);
+    }
+  };
+
+  const handleVolumeMouseUp = () => {
+    setPlayerState({ ...playerState, volumeSeeking: false });
   };
 
   const handleVolumeClick = (e) => {
@@ -154,9 +210,18 @@ function Player() {
         <div className="h-100 d-flex flex-column justify-content-end">
           {/* controls */}
           <div className="controls d-flex justify-content-center align-items-center px-3">
-            <div className="col-1 d-flex justify-content-start align-items-center gap-2">
+            <div
+              onMouseMove={(e) => handleVolumeChange(e)}
+              onMouseUp={() => handleVolumeMouseUp()}
+              className="col-1 d-flex justify-content-start align-items-center gap-2 h-100"
+            >
               <FontAwesomeIcon icon={faVolumeHigh} />
-              <div ref={volumeRef} onClick={(e) => handleVolumeClick(e)} className="volume-bar">
+              <div
+                ref={volumeRef}
+                onClick={(e) => handleVolumeClick(e)}
+                onMouseDown={() => handleVolumeMouseDown()}
+                className="volume-bar"
+              >
                 <div className="indicator"></div>
               </div>
             </div>
@@ -194,13 +259,22 @@ function Player() {
           </div>
 
           {/* timeline */}
-          <div className="w-100 timeline-container d-flex justify-content-between align-items-center">
+          <div
+            onMouseMove={(e) => handleSeekChange(e)}
+            onMouseUp={(e) => handleSeekMouseUp(e)}
+            className="w-100 timeline-container d-flex justify-content-between align-items-center"
+          >
             <Time
               className="text-center time"
               seconds={playerState.duration * playerState.played}
             ></Time>
             <div className="w-100 d-flex justify-content-center">
-              <div ref={timelineRef} onClick={(e) => handleSeekClick(e)} className="timeline w-100">
+              <div
+                ref={timelineRef}
+                onClick={(e) => handleSeekClick(e)}
+                onMouseDown={() => handleSeekMouseDown()}
+                className="timeline w-100"
+              >
                 <div className="indicator"></div>
               </div>
             </div>

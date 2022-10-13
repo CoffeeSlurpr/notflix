@@ -213,6 +213,14 @@ function Player() {
           </div>
         </div>
 
+        <div
+          className={`subtitles d-flex align-items-center justify-content-center text-center p-3 m-auto ${
+            isSubtitleOn ? 'visible' : 'invisible'
+          }`}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </div>
+
         <div className="h-100 d-flex flex-column justify-content-end">
           {/* controls */}
           <div className="controls d-flex justify-content-center align-items-center px-3">
@@ -378,7 +386,7 @@ function Player() {
       ref={playerWrapper}
       className="player-wrapper h-75"
     >
-      <div className={!isHovered ? 'd-none' : ''}>{renderOverlay()}</div>
+      <div className={!isHovered ? 'invisible' : ''}>{renderOverlay()}</div>
 
       {isInSettings && renderSettings()}
 

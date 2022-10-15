@@ -47,11 +47,36 @@ function Player() {
     pip: false,
     seeking: false,
     volumeSeeking: false,
+    languages: [],
   });
 
   useEffect(() => {
+    const state = window.localStorage.getItem('playerState');
+
+    if (state !== null) {
+      setPlayerState({
+        ...playerState,
+        muted: state.muted,
+        volume: state.volume,
+        languages: state.languages,
+      });
+
+      setIsLanguageOn(state.isLanguageOn);
+    }
+
     volumeRef.current.style.setProperty('--volume-position', playerState.volume);
   }, []);
+
+  useEffect(() => {
+    const state = {
+      muted: playerState.muted,
+      volume: playerState.volume,
+      languages: playerState.languages,
+      isLanguageOn: isLanguageOn,
+    };
+
+    window.localStorage.setItem('playerState', JSON.stringify(state));
+  }, [playerState.muted, playerState.volume]);
 
   const handleSettingsMenu = () => {
     setIsInSettings(!isInSettings);
@@ -314,7 +339,7 @@ function Player() {
             <div className="option-menu">
               <div className="category p-2">Language</div>
               <div className="options-list my-2">
-                {languages.map((lang, index) => {
+                {playerState.languages.map((lang, index) => {
                   return (
                     <div key={index} className="p-1">
                       {lang}
